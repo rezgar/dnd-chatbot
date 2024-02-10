@@ -1,5 +1,6 @@
 import asyncio
 from autogen import UserProxyAgent, AssistantAgent, GroupChat, GroupChatManager
+from user_proxy_agent_async import UserProxyAgentAsync
 
 #from group_chat_manager import GroupChatManager
 
@@ -10,7 +11,7 @@ class DnDSessionChat:
         self.client_sent_queue = asyncio.Queue()
         self.client_receive_queue = asyncio.Queue()
 
-        self.player = UserProxyAgent(
+        self.player = UserProxyAgentAsync(
             name = "player",
             human_input_mode="TERMINATE", 
             system_message="""You speak for a character in a Dungeons and Dragons game""",
@@ -34,7 +35,7 @@ class DnDSessionChat:
 
         self.storyteller = AssistantAgent(
             name="storyteller",
-            system_message="World-class fantasy writer. Responsible for telling a compelling story and prompting Player to contribute Character's perspective, thoughts and actions. Incorporates Player's actions and provides colourfull feeback. Never gets out of character. Relies on Game Master for technical side of the DnD game.",
+            system_message="World-class fantasy writer. Responsible for telling a compelling story and prompting Player to contribute Character's perspective, thoughts and actions. Incorporates Player's actions and provides colourfull feeback. Never gets out of character. Relies on Game Master for technical side of the DnD game. When player input is required ends the story with 'Your turn!'",
             llm_config={
                 "model":"gpt-3.5-turbo",
                 "temperature": 1,

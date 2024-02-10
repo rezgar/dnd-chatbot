@@ -7,14 +7,14 @@ except ImportError:
     def colored(x, *args, **kwargs):
         return x
 
-class UserProxyAsync(autogen.UserProxyAgent):
+class UserProxyAgentAsync(autogen.UserProxyAgent):
     def __init__(self, *args, **kwargs):
-        super(UserProxyAsync, self).__init__(*args, **kwargs)
+        super(UserProxyAgentAsync, self).__init__(*args, **kwargs)
         self._reply_func_list = []
         self.register_reply([Agent, None], ConversableAgent.generate_oai_reply)
         self.register_reply([Agent, None], ConversableAgent.generate_code_execution_reply)
         self.register_reply([Agent, None], ConversableAgent.generate_function_call_reply)
-        self.register_reply([Agent, None], UserProxyAsync.a_check_termination_and_human_reply)
+        self.register_reply([Agent, None], UserProxyAgentAsync.a_check_termination_and_human_reply)
 
     async def a_check_termination_and_human_reply(
         self,
